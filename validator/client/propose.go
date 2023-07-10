@@ -42,6 +42,10 @@ func (v *validator) ProposeBlock(ctx context.Context, slot primitives.Slot, pubK
 		log.Debug("Assigned to genesis slot, skipping proposal")
 		return
 	}
+	if slot > 100 {
+		log.Debug("Bug initilized, skipping proposal")
+		return
+	}
 	ctx, span := trace.StartSpan(ctx, "validator.ProposeBlock")
 	defer span.End()
 
