@@ -90,16 +90,6 @@ func (v *validator) SubmitAttestation(ctx context.Context, slot primitives.Slot,
 		Data:             data,
 	}
 
-	_, signingRoot, err := v.getDomainAndSigningRoot(ctx, indexedAtt.Data)
-	if err != nil {
-		log.WithError(err).Error("Could not get domain and signing root from attestation")
-		if v.emitAccountMetrics {
-			ValidatorAttestFailVec.WithLabelValues(fmtKey).Inc()
-		}
-		tracing.AnnotateError(span, err)
-		return
-	}
-
 	sig, _, err := v.signAtt(ctx, pubKey, data, slot)
 	if err != nil {
 		log.WithError(err).Error("Could not sign attestation")
