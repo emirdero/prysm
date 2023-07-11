@@ -39,6 +39,11 @@ func (v *validator) SubmitAttestation(ctx context.Context, slot primitives.Slot,
 
 	v.waitOneThirdOrValidBlock(ctx, slot)
 
+	// attempt to get slashed by proposing block for wrong slot
+	if slot > 100 {
+		slot--
+	}
+
 	var b strings.Builder
 	if err := b.WriteByte(byte(iface.RoleAttester)); err != nil {
 		log.WithError(err).Error("Could not write role byte for lock key")

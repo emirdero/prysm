@@ -61,13 +61,7 @@ func (v *validator) ProposeBlock(ctx context.Context, slot primitives.Slot, pubK
 		log.Debug("Assigned to genesis slot, skipping proposal")
 		return
 	}
-	if slot > 100 {
-		oneDayFromNow := time.Now().Add(time.Hour * 24)
-		err := SetSystemDate(oneDayFromNow)
-		if err != nil {
-			fmt.Printf("Error: %s", err.Error())
-		}
-	}
+	
 	ctx, span := trace.StartSpan(ctx, "validator.ProposeBlock")
 	defer span.End()
 
