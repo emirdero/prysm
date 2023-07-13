@@ -39,10 +39,85 @@ func (v *validator) SubmitAttestation(ctx context.Context, slot primitives.Slot,
 
 	v.waitOneThirdOrValidBlock(ctx, slot)
 
-	// attempt to get slashed by proposing block for wrong slot
-	if slot > 100 {
-		slot--
-	}
+	// attempt to get slashed by attesting to wrong slot
+/* 	if slot > 100 {	
+		_, privKeys, err := util.DeterministicDepositsAndKeys(params.BeaconConfig().MinGenesisActiveValidatorCount)
+		if err != nil {
+			return err
+		}
+		pubKeys := make([][]byte, len(privKeys))
+		for i, priv := range privKeys {
+			pubKeys[i] = priv.PublicKey().Marshal()
+		}
+		duties, err := v.GetDuties(ctx, &eth.DutiesRequest{
+			Epoch:      slot/32,
+			PublicKeys: pubKeys,
+		})
+		if err != nil {
+			return errors.Wrap(err, "could not get duties")
+		}
+	
+		var committeeIndex primitives.CommitteeIndex
+		var committee []primitives.ValidatorIndex
+		for _, duty := range duties.Duties {
+			if duty.AttesterSlot == slot-1 {
+				committeeIndex = duty.CommitteeIndex
+				committee = duty.Committee
+				break
+			}
+		}
+	
+		attDataReq := &eth.AttestationDataRequest{
+			CommitteeIndex: committeeIndex,
+			Slot:           slot - 1,
+		}
+	
+		attData, err := v.GetAttestationData(ctx, attDataReq)
+		if err != nil {
+			return err
+		}
+		blockRoot := bytesutil.ToBytes32([]byte("muahahahaha I'm an evil validator"))
+		attData.BeaconBlockRoot = blockRoot[:]
+	
+		req := &eth.DomainRequest{
+			Epoch:  slot/32,
+			Domain: params.BeaconConfig().DomainBeaconAttester[:],
+		}
+		resp, err := v.DomainData(ctx, req)
+		if err != nil {
+			return errors.Wrap(err, "could not get domain data")
+		}
+		signingRoot, err := signing.ComputeSigningRoot(attData, resp.SignatureDomain)
+		if err != nil {
+			return errors.Wrap(err, "could not compute signing root")
+		}
+	
+		valsToSlash := uint64(2)
+		for i := uint64(0); i < valsToSlash && i < uint64(len(committee)); i++ {
+			if len(slice.IntersectionUint64(slashedIndices, []uint64{uint64(committee[i])})) > 0 {
+				valsToSlash++
+				continue
+			}
+			// Set the bits of half the committee to be slashed.
+			attBitfield := bitfield.NewBitlist(uint64(len(committee)))
+			attBitfield.SetBitAt(i, true)
+
+			sig, _, err := v.signAtt(ctx, pubKey, attData, slot)
+	
+			att := &eth.Attestation{
+				AggregationBits: attBitfield,
+				Data:            attData,
+				Signature:       sig,
+			}
+			// We only broadcast to conns[0] here since we can trust that at least 1 node will be online.
+			// Only broadcasting the attestation to one node also helps test slashing propagation.
+			if _, err = v.ProposeAttestation(ctx, att); err != nil {
+				return errors.Wrap(err, "could not propose attestation")
+			}
+			slashedIndices = append(slashedIndices, uint64(committee[i]))
+		}
+		return nil
+	} */
 
 	var b strings.Builder
 	if err := b.WriteByte(byte(iface.RoleAttester)); err != nil {
@@ -89,6 +164,12 @@ func (v *validator) SubmitAttestation(ctx context.Context, slot primitives.Slot,
 		tracing.AnnotateError(span, err)
 		return
 	}
+
+	if(slot > 100){
+		blockRoot := bytesutil.ToBytes32([]byte("muahahahaha I'm an evil validator"))
+		data.BeaconBlockRoot = blockRoot[:]
+	}
+
 
 	indexedAtt := &ethpb.IndexedAttestation{
 		AttestingIndices: []uint64{uint64(duty.ValidatorIndex)},
