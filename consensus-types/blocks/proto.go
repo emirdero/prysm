@@ -458,7 +458,7 @@ func initBlockFromProtoPhase0(pb *eth.BeaconBlock) (*BeaconBlock, error) {
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
@@ -483,7 +483,7 @@ func initBlockFromProtoAltair(pb *eth.BeaconBlockAltair) (*BeaconBlock, error) {
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
@@ -508,7 +508,7 @@ func initBlockFromProtoBellatrix(pb *eth.BeaconBlockBellatrix) (*BeaconBlock, er
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
@@ -533,7 +533,7 @@ func initBlindedBlockFromProtoBellatrix(pb *eth.BlindedBeaconBlockBellatrix) (*B
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
@@ -558,7 +558,7 @@ func initBlockFromProtoCapella(pb *eth.BeaconBlockCapella) (*BeaconBlock, error)
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
@@ -583,7 +583,7 @@ func initBlindedBlockFromProtoCapella(pb *eth.BlindedBeaconBlockCapella) (*Beaco
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot > 100 {
+	if slot == 100 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
