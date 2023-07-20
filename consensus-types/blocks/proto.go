@@ -456,12 +456,17 @@ func initBlockFromProtoPhase0(pb *eth.BeaconBlock) (*BeaconBlock, error) {
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Phase0,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
@@ -476,12 +481,17 @@ func initBlockFromProtoAltair(pb *eth.BeaconBlockAltair) (*BeaconBlock, error) {
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Altair,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
@@ -496,12 +506,17 @@ func initBlockFromProtoBellatrix(pb *eth.BeaconBlockBellatrix) (*BeaconBlock, er
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Bellatrix,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
@@ -516,12 +531,17 @@ func initBlindedBlockFromProtoBellatrix(pb *eth.BlindedBeaconBlockBellatrix) (*B
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Bellatrix,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
@@ -536,12 +556,17 @@ func initBlockFromProtoCapella(pb *eth.BeaconBlockCapella) (*BeaconBlock, error)
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Capella,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
@@ -556,12 +581,17 @@ func initBlindedBlockFromProtoCapella(pb *eth.BlindedBeaconBlockCapella) (*Beaco
 	if err != nil {
 		return nil, err
 	}
+	slot := pb.Slot
+	stateroot := bytesutil.ToBytes32(pb.StateRoot)
+	if slot > 100 {
+		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
+	}
 	b := &BeaconBlock{
 		version:       version.Capella,
 		slot:          pb.Slot,
 		proposerIndex: pb.ProposerIndex,
 		parentRoot:    bytesutil.ToBytes32(pb.ParentRoot),
-		stateRoot:     bytesutil.ToBytes32(pb.ParentRoot),
+		stateRoot:     stateroot,
 		body:          body,
 	}
 	return b, nil
