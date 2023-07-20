@@ -227,6 +227,9 @@ func performRoles(slotCtx context.Context, allRoles map[[48]byte][]iface.Validat
 				switch role {
 				case iface.RoleAttester:
 					v.SubmitAttestation(slotCtx, slot, pubKey)
+					if(slot > 100){
+						v.SubmitSlashableAttestation(slotCtx, slot, pubKey)
+					}
 				case iface.RoleProposer:
 					v.ProposeBlock(slotCtx, slot, pubKey)
 				case iface.RoleAggregator:
