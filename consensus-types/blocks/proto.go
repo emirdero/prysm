@@ -458,7 +458,7 @@ func initBlockFromProtoPhase0(pb *eth.BeaconBlock) (*BeaconBlock, error) {
 	}
 	slot := pb.Slot
 	stateroot := bytesutil.ToBytes32(pb.StateRoot)
-	if slot == 100 {
+	if slot == 48 {
 		stateroot = bytesutil.ToBytes32(pb.ParentRoot)
 	}
 	b := &BeaconBlock{
